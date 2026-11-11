@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="es-PE">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carta | Pizza Tavo</title>
+  <meta name="description" content="Carta de Pizza Tavo, pizzería en La Pradera, Pimentel (Chiclayo). Pizzas en 4 tamaños, lasañas, empanadas y bebidas con precios." />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Mismo estilo que la sección "La carta" de la web de Pizza Tavo */
+    :root {
+      --rojo: #e3101c;
+      --rojo-oscuro: #b50c16;
+      --verde-claro: #6fd152;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', system-ui, sans-serif;
+      color: #fff; background: #000; line-height: 1.6; overflow-x: clip;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1120px, 100% - 32px); margin-inline: auto; }
+    h1, h2, h3, h4 { font-family: 'Zilla Slab', Georgia, serif; }
+
+    .btn {
+      display: inline-block; background: var(--rojo); color: #fff; font-weight: 600;
+      padding: 14px 28px; border-radius: 999px; border: 2px solid var(--rojo);
+      box-shadow: 0 8px 24px rgba(227, 16, 28, .35); transition: transform .2s, background .2s;
+    }
+    .btn:hover { background: var(--rojo-oscuro); border-color: var(--rojo-oscuro); transform: translateY(-2px); }
+    .btn--ghost { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.25); box-shadow: none; }
+    .btn--ghost:hover { background: #fff; color: #000; border-color: #fff; }
+
+    .carta { padding: 56px 0 90px; }
+
+    /* encabezado editorial */
+    .bloque__head {
+      position: relative; display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 16px 24px; flex-wrap: wrap; padding-bottom: 28px; margin-bottom: 48px;
+    }
+    .bloque__head::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: #fff;
+      transform: scaleX(0); transform-origin: left; animation: linea 1.2s cubic-bezier(.7,0,.2,1) .15s forwards;
+    }
+    @keyframes linea { to { transform: scaleX(1); } }
+    .bloque__head h1 {
+      font-size: clamp(3.2rem, 8vw, 6rem); line-height: .9; letter-spacing: -0.02em;
+      animation: subir 1s cubic-bezier(.7,0,.2,1) both;
+    }
+    @keyframes subir { from { clip-path: inset(0 0 100% 0); transform: translateY(40%); } to { clip-path: inset(-10% 0 -20% 0); transform: none; } }
+    .cabecera { position: relative; display: flex; align-items: center; gap: 22px; }
+    .cabecera::before {
+      content: ''; position: absolute; z-index: -1; left: -30px; top: 50%; width: 200px; height: 200px;
+      transform: translateY(-50%); border-radius: 50%;
+      background: radial-gradient(circle closest-side, rgba(227,16,28,.30), rgba(227,16,28,0));
+    }
+    .carta { position: relative; isolation: isolate; }
+    .logo {
+      flex: none; width: 140px; height: 140px; border-radius: 50%;
+      animation: logoIn .9s cubic-bezier(.2,.8,.2,1.2) both;
+    }
+    @keyframes logoIn { from { opacity: 0; transform: rotate(-25deg) scale(.6); } }
+    .estado { margin-top: 12px; white-space: nowrap; }
+    .estado { display: inline-flex; align-items: center; gap: 8px; font-size: .88rem; color: rgba(255,255,255,.65); }
+    .estado::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.4); }
+    .estado.abierto { color: #fff; }
+    .estado.abierto::before { background: var(--verde-claro); }
+    .estado.cerrado::before { background: var(--rojo); }
+
+    /* navegación de la carta: texto simple, subrayado */
+    .carta__nav {
+      position: sticky; top: 0; z-index: 10; background: #000;
+      display: flex; gap: 28px; margin: -26px 0 56px; padding: 10px 0;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .carta__nav::-webkit-scrollbar { display: none; }
+    .carta__nav button {
+      flex-shrink: 0; background: none; border: 0; padding: 6px 0; cursor: pointer;
+      font: 600 1rem 'Poppins', sans-serif; color: rgba(255,255,255,.45);
+      border-bottom: 2px solid transparent; transition: color .2s, border-color .2s;
+    }
+    .carta__nav button:hover { color: #fff; }
+    .carta__nav button.is-active { color: #fff; border-color: var(--rojo); }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+    .carta__seccion + .carta__seccion { margin-top: 80px; }
+    .carta__titulo {
+      font-size: clamp(2.4rem, 6vw, 3.6rem); line-height: .95; letter-spacing: -0.02em;
+      margin-bottom: 28px; display: flex; align-items: center; gap: 16px;
+    }
+    .carta__titulo::after { content: ''; flex: 1; height: 2px; background: var(--rojo); }
+
+    /* --- pizzas --- */
+    .grupo + .grupo { margin-top: 56px; }
+    .grupo__head, .fila {
+      display: grid; grid-template-columns: 1fr repeat(4, 92px); align-items: baseline; column-gap: 8px;
+    }
+    .grupo__head { padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,.18); }
+    .grupo__head h3 { font-size: 2rem; color: var(--verde-claro); text-transform: uppercase; letter-spacing: .01em; }
+    .grupo__col { text-align: right; font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.5); }
+
+    .grupo__lista { list-style: none; }
+    .fila {
+      padding: 16px 10px; margin: 0 -10px; border-radius: 10px;
+      border-bottom: 1px solid rgba(255,255,255,.07); transition: background .2s;
+    }
+    .fila:hover { background: rgba(255,255,255,.04); }
+    .fila h4 { font-size: 1.35rem; line-height: 1.15; text-transform: uppercase; transition: color .2s; }
+    .fila:hover h4 { color: var(--rojo); }
+    .fila p { color: rgba(255,255,255,.55); font-size: .9rem; margin-top: 2px; }
+    .monto { white-space: nowrap; }
+    .sol { font-size: .72em; font-weight: 500; color: rgba(255,255,255,.55); margin-right: 3px; }
+    .fila__precio { text-align: right; font-weight: 600; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+    .fila--precio-unico { border-bottom: 1px dashed rgba(255,255,255,.18); }
+    .fila__nota { color: rgba(255,255,255,.75) !important; font-style: italic; margin: 0 !important; }
+
+    .grupo__lista--dos { display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; }
+    .grupo__lista--dos .fila { grid-template-columns: 1fr; }
+
+    .combina {
+      display: inline-block; margin-top: 22px; padding: 6px 14px;
+      font: 700 1.25rem 'Zilla Slab', Georgia, serif; text-transform: uppercase;
+      color: var(--verde-claro); border-top: 3px solid var(--verde-claro); border-bottom: 3px solid var(--verde-claro);
+      transform: rotate(-3deg);
+    }
+
+    /* --- listas (lasañas, empanadas, bebidas...) --- */
+    .listas { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px 72px; }
+    .lista h3 {
+      font-size: 2rem; color: var(--verde-claro); text-transform: uppercase;
+      padding-bottom: 10px; margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,.18);
+    }
+    .lista ul { list-style: none; }
+    .lista li { display: flex; align-items: baseline; gap: 10px; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,.07); }
+    .lista__nombre { font-weight: 500; font-size: 1.02rem; }
+    .lista__puntos { flex: 1; border-bottom: 2px dotted rgba(255,255,255,.2); transform: translateY(-4px); }
+    .lista__precio { font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+    /* pie de la carta */
+    .carta__pie {
+      display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+      margin-top: 72px; padding-top: 28px; border-top: 2px solid #fff;
+    }
+    .carta__pie p { font: 700 1.6rem 'Zilla Slab', Georgia, serif; }
+    .carta__pie div { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .horario { margin-top: 40px; }
+    .horario h3 { font-size: 1.3rem; text-transform: uppercase; margin-bottom: 6px; }
+    .horario ul { list-style: none; }
+    .horario li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.07); color: rgba(255,255,255,.6); font-size: .95rem; }
+    .horario li.hoy { color: #fff; font-weight: 600; }
+    .horario li.hoy span:first-child::after { content: ' · Hoy'; color: var(--rojo); }
+    .direccion { margin-top: 18px; color: rgba(255,255,255,.55); font-size: .9rem; }
+
+    @media (max-width: 1100px) and (min-width: 821px) {
+      .grupo__head, .fila { grid-template-columns: 1fr repeat(4, 80px); }
+      .grupo__lista--dos .fila { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 820px) {
+      .carta { padding: 40px 0 70px; }
+      .bloque__head { margin-bottom: 32px; }
+      .cabecera { gap: 16px; }
+      .logo { width: 104px; height: 104px; }
+      .bloque__head h1 { font-size: clamp(2.6rem, 12vw, 3.4rem); }
+      .estado { font-size: .8rem; }
+      .carta__nav { gap: 22px; margin: -12px -16px 32px; padding: 10px 16px; }
+      .grupo__col { display: none; }
+      .fila { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 6px; row-gap: 10px; padding: 16px 0; margin: 0; }
+      .fila:hover { background: none; }
+      .fila__info { grid-column: 1 / -1; }
+      .fila__precio {
+        display: flex; flex-direction: column; align-items: center; gap: 1px;
+        padding: 6px 0; border-radius: 8px; background: rgba(255,255,255,.05); font-size: .95rem;
+      }
+      .fila__precio::before {
+        content: attr(data-tam); font-size: .62rem; font-weight: 500; letter-spacing: .05em;
+        text-transform: uppercase; color: rgba(255,255,255,.5);
+      }
+      .grupo__lista--dos { grid-template-columns: minmax(0, 1fr); }
+      .fila h4 { font-size: 1.2rem; }
+      .listas { grid-template-columns: 1fr; }
+      .carta__pie { flex-direction: column; align-items: stretch; text-align: center; }
+      .carta__pie div { flex-direction: column; }
+      .carta__pie .btn { text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; }
+      .bloque__head::after { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <section class="carta">
+    <div class="container">
+      <header class="bloque__head">
+        <div class="cabecera">
+          <img class="logo" src="logo-160.webp" srcset="logo-160.webp 160w, logo-720.webp 720w" sizes="140px" alt="Pizza Tavo" width="140" height="140" />
+          <div>
+            <h1>La carta</h1>
+            <span class="estado" id="estado"></span>
+          </div>
+        </div>
+      </header>
+
+      <nav class="carta__nav" role="tablist" aria-label="Secciones de la carta" id="nav"></nav>
+
+      <div id="paneles"></div>
+
+      <div class="carta__pie">
+        <p>¿Se te antojó? Te esperamos en el local.</p>
+        <div>
+          <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=-6.7777325,-79.8884342" target="_blank" rel="noopener">Cómo llegar</a>
+          <a class="btn btn--ghost" href="https://wa.me/51988077408?text=Hola%2C%20tengo%20una%20consulta%20sobre%20la%20carta%20%F0%9F%8D%95" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="horario">
+        <h3>Horario</h3>
+        <ul id="horario"></ul>
+        <p class="direccion">Mz. "M" Lote 18, PJ. San Gerónimo, La Pradera, Pimentel · A la altura de la Comisaría, una cuadra más adelante · 927 431 644 · 988 077 408</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // ================= CARTA (edita aquí precios y platos) =================
+    const TAMANOS = ['Personal', 'Mediana', 'Grande', 'Familiar'];
+
+    const CLASICAS = {
+      precios: [12, 30, 35, 45],
+      items: [
+        ['Pepperoni', 'Mozzarella + pepperoni'],
+        ['Americana', 'Mozzarella + jamón'],
+        ['Fugazza', 'Mozzarella + cebolla + aceitunas'],
+        ['Napolitana', 'Mozzarella + rodajas de tomate + aceitunas + albahaca'],
+        ['Chorizo', 'Mozzarella + chorizo'],
+        ['Champiñones', 'Mozzarella + champiñones'],
+      ],
+    };
+
+    const ESPECIALES = [
+      ['Hawaiana', 'Mozzarella + piña + jamón', [13.5, 35, 42, 50]],
+      ['Tropical', 'Mozzarella + piña + durazno + jamón', [15, 38, 45, 52]],
+      ['Húngara', 'Mozzarella + champiñones + pollo', [16, 40, 45, 55]],
+      ['Full Embutidos', 'Mozzarella + jamón + chorizo + pepperoni + tocino', [16, 40, 45, 55]],
+      ['Carnívora', 'Mozzarella + carne + tocino + pepperoni + salame', [16, 40, 45, 55]],
+      ['Primavera', 'Mozzarella + jamón + huevo + aceitunas', [16, 40, 45, 55]],
+    ];
+
+    const CARTA = [
+      { id: 'platos', titulo: 'Lasañas y platos', grupos: [
+        { nombre: 'Lasañas', items: [['Lasaña clásica de carne', 25], ['Lasaña clásica de pollo', 25]] },
+        { nombre: 'Platos a la carta', items: [['Arroz chaufa', 12], ['Salchipollo', 11], ['Pollo a la plancha', 13], ['Pollo broaster', 13], ['Milanesa de carne', 15]] },
+      ]},
+      { id: 'entradas', titulo: 'Entradas', grupos: [
+        { nombre: 'Entradas', items: [['Empanada de carne', 2.5], ['Empanada de pollo', 2.5], ['Empanada de jamón y queso', 2.5], ['Pan al ajo', 4]] },
+      ]},
+      { id: 'bebidas', titulo: 'Bebidas y licores', grupos: [
+        { nombre: 'Bebidas', items: [['Maracuyá 1L', 5], ['Lima 1L', 5], ['Inca Kola 1L', 6], ['Coca Cola 1L', 6], ['Pepsi 1L', 6]] },
+        { nombre: 'Licores', items: [['Copa de vino', 8], ['Botella de vino', 38], ['Jarra de sangría 1L', 40], ['1/2 jarra de sangría', 25]] },
+      ]},
+    ];
+
+    // n: días (0 = domingo … 6 = sábado); abre/cierra en 24 h
+    const HORARIO = [
+      { dias: 'Lunes a miércoles', horas: '4:00 pm – 10:30 pm', n: [1, 2, 3], abre: '16:00', cierra: '22:30' },
+      { dias: 'Jueves', horas: 'Cerrado', n: [4] },
+      { dias: 'Viernes', horas: '5:00 pm – 10:30 pm', n: [5], abre: '17:00', cierra: '22:30' },
+      { dias: 'Sábado y domingo', horas: '4:00 pm – 10:30 pm', n: [6, 0], abre: '16:00', cierra: '22:30' },
+    ];
+
+    // ================= Render =================
+    const precio = (n) => `<span class="monto"><small class="sol">S/</small>${n.toFixed(2)}</span>`;
+    const precios = (lista) => lista.map((p, i) => `<span class="fila__precio" data-tam="${TAMANOS[i]}">${precio(p)}</span>`).join('');
+    const cabecera = (titulo) => `<div class="grupo__head"><h3>${titulo}</h3>${TAMANOS.map((t) => `<span class="grupo__col">${t}</span>`).join('')}</div>`;
+    const fila = (nombre, ing, ps = []) => `<li class="fila"><div class="fila__info"><div><h4>${nombre}</h4><p>${ing}</p></div></div>${precios(ps)}</li>`;
+
+    const pizzas = `
+      <div class="grupo">
+        ${cabecera('Clásicas')}
+        <div class="fila fila--precio-unico"><div class="fila__info"><p class="fila__nota">Cualquier clásica</p></div>${precios(CLASICAS.precios)}</div>
+        <ul class="grupo__lista grupo__lista--dos">${CLASICAS.items.map(([n, i]) => fila(n, i)).join('')}</ul>
+        <p class="combina">¡Combínalas como quieras!</p>
+      </div>
+      <div class="grupo">
+        ${cabecera('Especiales')}
+        <ul class="grupo__lista">${ESPECIALES.map(([n, i, ps]) => fila(n, i, ps)).join('')}</ul>
+      </div>`;
+
+    const lista = (grupos) => `<div class="listas">${grupos.map((g) => `
+      <div class="lista">${grupos.length > 1 ? `<h3>${g.nombre}</h3>` : ''}<ul>${g.items.map(([n, p]) =>
+        `<li><span class="lista__nombre">${n}</span><span class="lista__puntos" aria-hidden="true"></span><span class="lista__precio">${precio(p)}</span></li>`
+      ).join('')}</ul></div>`).join('')}</div>`;
+
+    // Orden de las pestañas
+    const ORDEN = ['entradas', 'pizzas', 'platos', 'bebidas'];
+    const secciones = [{ id: 'pizzas', titulo: 'Pizzas', html: pizzas }, ...CARTA.map((c) => ({ ...c, html: lista(c.grupos) }))]
+      .sort((a, b) => ORDEN.indexOf(a.id) - ORDEN.indexOf(b.id));
+
+    const nav = document.getElementById('nav');
+    const paneles = document.getElementById('paneles');
+    nav.innerHTML = secciones.map((s, i) => `<button role="tab" data-id="${s.id}" aria-selected="${i === 0}" class="${i === 0 ? 'is-active' : ''}">${s.titulo}</button>`).join('');
+    // Todas las secciones una debajo de otra; las pestañas solo llevan a cada una
+    paneles.innerHTML = secciones.map((s) => `<section class="carta__seccion" id="${s.id}"><h2 class="carta__titulo">${s.titulo}</h2>${s.html}</section>`).join('');
+    const botones = [...nav.querySelectorAll('button')];
+
+    const marcar = (id) => botones.forEach((x) => {
+      const on = x.dataset.id === id;
+      if (on && !x.classList.contains('is-active')) {
+        nav.scrollTo({ left: x.offsetLeft - (nav.clientWidth - x.offsetWidth) / 2, behavior: 'smooth' });
+      }
+      x.classList.toggle('is-active', on);
+      x.setAttribute('aria-selected', on);
+    });
+
+    nav.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (b) document.getElementById(b.dataset.id).scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Resalta la pestaña de la sección que se está viendo
+    const espiar = () => {
+      const tope = nav.offsetHeight + 40;
+      let actual = secciones[0].id;
+      secciones.forEach((s) => { if (document.getElementById(s.id).getBoundingClientRect().top <= tope) actual = s.id; });
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) actual = secciones.at(-1).id;
+      marcar(actual);
+    };
+    window.addEventListener('scroll', espiar, { passive: true });
+    espiar();
+
+    // Horario + estado (hora de Perú)
+    const ahora = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Lima' }));
+    const dia = ahora.getDay();
+    const min = ahora.getHours() * 60 + ahora.getMinutes();
+    const aMin = (h) => { const [a, b] = h.split(':').map(Number); return a * 60 + b; };
+    document.getElementById('horario').innerHTML = HORARIO.map((h) =>
+      `<li class="${h.n.includes(dia) ? 'hoy' : ''}"><span>${h.dias}</span><span>${h.horas}</span></li>`).join('');
+    const hoy = HORARIO.find((h) => h.n.includes(dia));
+    const estado = document.getElementById('estado');
+    if (hoy?.abre && min >= aMin(hoy.abre) && min < aMin(hoy.cierra)) {
+      estado.className = 'estado abierto';
+      estado.textContent = `Abierto · hasta ${hoy.horas.split('–')[1].trim()}`;
+    } else {
+      estado.className = 'estado cerrado';
+      estado.textContent = hoy?.abre && min < aMin(hoy.abre) ? `Cerrado · abre hoy ${hoy.horas.split('–')[0].trim()}` : 'Cerrado ahora';
+    }
+  </script>
+</body>
+</html>
